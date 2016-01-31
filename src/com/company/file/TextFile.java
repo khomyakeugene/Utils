@@ -36,7 +36,7 @@ public class TextFile {
         BufferedWriter bufferedWriter = null;
 
         // In this method we intentionally do not use try-with-resources just to have the possibility to handle
-        // different input/output errors
+        // different input/output errors separately
         try {
             try {
                 bufferedWriter = new BufferedWriter(new FileWriter(fileName));
