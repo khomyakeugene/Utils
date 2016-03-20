@@ -156,13 +156,11 @@ public class SelfDescribingObjectService {
         return objectProperty;
     }
 
-    public static Method searchOneDoubleArgumentMethod(String className, String methodName, boolean onlyPublic) {
+    public static Method searchMethod(String className, String methodName, Class[] parameterTypes, boolean onlyPublic) {
         Method method = null;
 
         try {
             Class cls = Class.forName(className);
-            Class[] parameterTypes = new Class[1];
-            parameterTypes[0] = double.class;
 
             try {
                 method = onlyPublic ? cls.getMethod(methodName, parameterTypes) :
@@ -177,13 +175,72 @@ public class SelfDescribingObjectService {
         return method;
     }
 
+    public static Method searchMethod(Object object, String methodName, Class[] parameterTypes, boolean onlyPublic) {
+        return searchMethod(object.getClass().getName(), methodName, parameterTypes, onlyPublic);
+    }
+
+    public static Method searchPublicMethod(Object object, String methodName, Class[] parameterTypes, boolean onlyPublic) {
+        return searchMethod(object, methodName, parameterTypes, true);
+    }
+
+    public static Method searchOneDoubleArgumentMethod(String className, String methodName, boolean onlyPublic) {
+        return searchMethod(className, methodName, new Class[]{double.class}, onlyPublic);
+    }
+
     public static Method searchOneDoubleArgumentPublicMethod(String className, String methodName) {
         return searchOneDoubleArgumentMethod(className, methodName, true);
     }
 
+    public static Method searchOneDoubleArgumentAnyMethod(String className, String methodName) {
+        return searchOneDoubleArgumentMethod(className, methodName, false);
+    }
 
-    public static double invokeOneDoubleArgumentStaticMethod(String className, String methodName, double argument) {
-        return invokeOneDoubleArgumentStaticMethod(searchOneDoubleArgumentPublicMethod(className, methodName), argument);
+    public static Method searchEmptyArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+        return searchMethod(object, methodName, new Class[]{}, onlyPublic);
+    }
+
+    public static Method searchEmptyArgumentPublicMethod(Object object, String methodName) {
+        return searchEmptyArgumentMethod(object, methodName, true);
+    }
+
+    public static Method searchEmptyArgumentAnyMethod(Object object, String methodName) {
+        return searchEmptyArgumentMethod(object, methodName, false);
+    }
+
+    public static Method searchOneObjectArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+        return searchMethod(object, methodName, new Class[]{Object.class}, onlyPublic);
+    }
+
+    public static Method searchOneObjectArgumentPublicMethod(Object object, String methodName) {
+        return searchOneObjectArgumentMethod(object, methodName, true);
+    }
+
+    public static Method searchOneObjectArgumentAnyMethod(Object object, String methodName) {
+        return searchOneObjectArgumentMethod(object, methodName, false);
+    }
+
+    public static Method searchOneIntArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+        return searchMethod(object, methodName, new Class[]{int.class}, onlyPublic);
+    }
+
+    public static Method searchOneIntArgumentPublicMethod(Object object, String methodName) {
+        return searchOneIntArgumentMethod(object, methodName, true);
+    }
+
+    public static Method searchOneIntArgumentAnyMethod(Object object, String methodName) {
+        return searchOneIntArgumentMethod(object, methodName, false);
+    }
+
+    public static Method searchOneIntAndOneObjectArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+        return searchMethod(object, methodName, new Class[]{int.class, Object.class}, onlyPublic);
+    }
+
+    public static Method searchOneIntAndOneObjectArgumentPublicMethod(Object object, String methodName) {
+        return searchOneIntAndOneObjectArgumentMethod(object, methodName, true);
+    }
+
+    public static Method searchOneIntAndOneObjectArgumentAnyMethod(Object object, String methodName) {
+        return searchOneIntAndOneObjectArgumentMethod(object, methodName, false);
     }
 
     public static double invokeOneDoubleArgumentStaticMethod(Method method, double argument) {
@@ -196,5 +253,9 @@ public class SelfDescribingObjectService {
         }
 
         return result;
+    }
+
+    public static double invokeOneDoubleArgumentStaticMethod(String className, String methodName, double argument) {
+        return invokeOneDoubleArgumentStaticMethod(searchOneDoubleArgumentPublicMethod(className, methodName), argument);
     }
 }
