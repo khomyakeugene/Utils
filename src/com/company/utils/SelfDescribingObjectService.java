@@ -179,7 +179,7 @@ public class SelfDescribingObjectService {
         return searchMethod(object.getClass().getName(), methodName, parameterTypes, onlyPublic);
     }
 
-    public static Method searchPublicMethod(Object object, String methodName, Class[] parameterTypes, boolean onlyPublic) {
+    public static Method searchPublicMethod(Object object, String methodName, Class[] parameterTypes) {
         return searchMethod(object, methodName, parameterTypes, true);
     }
 
