@@ -198,7 +198,6 @@ public class SelfDescribingObjectService {
         return null;
     }
 
-
     public static Method searchOneDoubleArgumentMethod(String className, String methodName, boolean onlyPublic) {
         return searchMethod(className, methodName, new Class[]{double.class}, onlyPublic);
     }
