@@ -1,6 +1,7 @@
 package com.company.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class SelfDescribingObjectService {
     }
 
     public static String checkWhetherMethodWithoutArgumentsIsPresented(Object object, String methodName, boolean onlyPublic) {
-        Class cls = object.getClass();
+        Class<?> cls = object.getClass();
 
         String errorMessage = "";
         try {
@@ -156,20 +157,24 @@ public class SelfDescribingObjectService {
         return objectProperty;
     }
 
-    public static Method searchMethod(String className, String methodName, Class[] parameterTypes, boolean onlyPublic) {
+    public static Method searchMethod(String className, String methodName, Class<?>[] parameterTypes, boolean onlyPublic) {
         Method method = null;
-
-        try {
-            Class cls = Class.forName(className);
-
+        if (methodName != null) {
             try {
-                method = onlyPublic ? cls.getMethod(methodName, parameterTypes) :
-                        cls.getDeclaredMethod(methodName, parameterTypes);
-            } catch (NullPointerException | SecurityException | NoSuchMethodException e) {
+                Class<?> cls = Class.forName(className);
+
+                try {
+                    method = onlyPublic ? cls.getMethod(methodName, parameterTypes) :
+                            cls.getDeclaredMethod(methodName, parameterTypes);
+                    if (method != null) {
+                        method.setAccessible(true);
+                    }
+                } catch (NullPointerException | SecurityException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            } catch (NullPointerException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        } catch (NullPointerException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
         return method;
@@ -182,6 +187,17 @@ public class SelfDescribingObjectService {
     public static Method searchPublicMethod(Object object, String methodName, Class[] parameterTypes) {
         return searchMethod(object, methodName, parameterTypes, true);
     }
+
+    public static Object invokeMethod(Object object, Method method, Object... args) {
+        try {
+            return method.invoke(object, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public static Method searchOneDoubleArgumentMethod(String className, String methodName, boolean onlyPublic) {
         return searchMethod(className, methodName, new Class[]{double.class}, onlyPublic);
