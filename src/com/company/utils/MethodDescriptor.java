@@ -34,6 +34,11 @@ public class MethodDescriptor {
         this (fullMethodName, null, methodArgumentType, collectionAsObjectMethod, dataPrePopulate);
     }
 
+    public MethodDescriptor(String fullMethodName, MethodArgumentType methodArgumentType,
+                            boolean collectionAsObjectMethod, boolean dataPrePopulate) {
+        this (fullMethodName, null, new MethodArgumentType[] {methodArgumentType}, collectionAsObjectMethod, dataPrePopulate);
+    }
+
     public boolean isCollectionAsObjectMethod() {
         return collectionAsObjectMethod;
     }
