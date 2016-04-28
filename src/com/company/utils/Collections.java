@@ -17,9 +17,7 @@ public class Collections {
         Table.printTableHeader(header, width);
 
         // The data
-        list
-                .stream()
-                .forEach(p -> Table.printTableRow(p.toString(), width));
+        list.stream().forEach(p -> Table.printTableRow(p.toString(), width));
 
         // Footer
         Table.printTableRowBorder(width);
