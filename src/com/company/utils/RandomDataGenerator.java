@@ -36,11 +36,11 @@ public class RandomDataGenerator {
 
         setUpperIntLimit(size * DEFAULT_UPPER_INT_LIMIT_MULTIPLIER);
 
-        Utils.printLine(String.format(GENERATE_RANDOM_INTEGER_ELEMENTS_PATTERN, size));
+        Util.printLine(String.format(GENERATE_RANDOM_INTEGER_ELEMENTS_PATTERN, size));
         for (int i = 0; i < size; i++) {
             result[i] = generateRandomInt();
         }
-        Utils.printDoneMessage();
+        Util.printDoneMessage();
 
         return result;
     }

@@ -3,14 +3,20 @@ package com.company.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * Created by Yevgen on 06.01.2016.
  */
 
-public class Utils {
+public class Util {
     // public final static int LETS_THINK_THIS_IS_THE_NUMBER_OF_CURRENT_ELEMENT_OF_STACK = 1; // Reserve it for future time
     public final static int LETS_THINK_THIS_IS_THE_NUMBER_OF_CALLING_ELEMENT_OF_STACK = 2;
 
@@ -46,7 +52,9 @@ public class Utils {
     }
 
     public static String getLongestString(String[] data) {
-        return Arrays.stream(data).max((f1, f2) -> new Integer(f1.length()).compareTo(f2.length())).get();
+        Optional<String> stringOptional = Arrays.stream(data).max((f1, f2) -> new Integer(f1.length()).compareTo(f2.length()));
+
+        return stringOptional.isPresent() ? stringOptional.get() : "";
     }
 
     public static int getLengthOfLongestString(String[] data) {
@@ -179,5 +187,50 @@ public class Utils {
 
     public static String stringStart(String string, int length) {
         return (string.length() > length) ? string.substring(0, length) : string;
+    }
+
+    public static Integer parseInt(String data) {
+        Integer result;
+
+        try {
+            result = Integer.parseInt(data);
+
+        } catch (NullPointerException | NumberFormatException e) {
+            result = null;
+        }
+
+        return result;
+    }
+
+    public static LocalDate DateToLocalDate(Date date) {
+        Instant instant = date.toInstant();
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+        return zonedDateTime.toLocalDate();
+    }
+
+    public static Date dateAdd(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, days);
+
+        return calendar.getTime();
+    }
+
+    public static long dateSub(Date date1, Date date2) {
+        return Util.DateToLocalDate(date2).until(Util.DateToLocalDate(date1), DAYS);
+    }
+
+    public static Class getApplicationMainClass() {
+        StackTraceElement[] stack = Thread.currentThread ().getStackTrace ();
+        StackTraceElement main = stack[stack.length - 1];
+
+        return main.getClass();
+    }
+
+    public static String getResourceFilePath(String fileName) {
+        URL url = Util.class.getClassLoader().getResource(fileName);
+
+        return (url != null) ? url.getFile() : null;
     }
 }

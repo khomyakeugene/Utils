@@ -12,7 +12,7 @@ public class TableBuilder {
     public final static String COLUMN_FIELD = " ";
 
     public static int getColumnWidth(String[][] tableData, int columnNumber) {
-        return Utils.getLengthOfLongestString(Utils.convertColumnToStringArray(tableData, columnNumber));
+        return Util.getLengthOfLongestString(Util.convertColumnToStringArray(tableData, columnNumber));
     }
 
     public static int[] getColumnWidth(String[][] tableData) {

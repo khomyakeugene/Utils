@@ -116,7 +116,7 @@ public class SelfDescribingObjectService {
         if (!errorMessage.isEmpty()) {
             //  Try to find a field without case sensitive
             String[] fieldNameList = getPublicFieldNameList(object);
-            int index = Utils.getIndexInStringArray(fieldNameList, propertyName, true);
+            int index = Util.getIndexInStringArray(fieldNameList, propertyName, true);
             if (index != -1) {
                 objectProperty.setRealPropertyName(fieldNameList[index]);
                 errorMessage = "";
@@ -132,12 +132,12 @@ public class SelfDescribingObjectService {
                 } else {
                     // Let's try to find suitable getter
                     String[] gettersNameList = getGettersNameList(object);
-                    index = Utils.getIndexInStringArray(gettersNameList, propertyName, true);
+                    index = Util.getIndexInStringArray(gettersNameList, propertyName, true);
                     if (index == -1) {
                         // Construct "synthetic" getter name
                         propertyName = GET_PREFIX + propertyName;
                         // Find "synthetic" getter
-                        index = Utils.getIndexInStringArray(gettersNameList, propertyName, true);
+                        index = Util.getIndexInStringArray(gettersNameList, propertyName, true);
                     }
                     if (index != -1) {
                         objectProperty.setRealPropertyName(gettersNameList[index]);

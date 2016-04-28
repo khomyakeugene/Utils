@@ -9,7 +9,7 @@ public class Table {
     public final static Character CORNER_CHARACTER = '+';
 
     public static String line(int length) {
-        return Utils.repeatChar(ROW_CHARACTER, length);
+        return Util.repeatChar(ROW_CHARACTER, length);
     }
 
     public static String tableLine(int width) {
@@ -20,15 +20,15 @@ public class Table {
         int dataLength = width - 2;
 
         return String.format(String.format("%c%%-%ds%c", COLUMN_CHARACTER, dataLength, COLUMN_CHARACTER),
-                Utils.stringStart(rowData, dataLength));
+                Util.stringStart(rowData, dataLength));
     }
 
     public static void printTableRow(String rowData, int width) {
-        Utils.printMessage(tableRow(rowData, width));
+        Util.printMessage(tableRow(rowData, width));
     }
 
     public static void printTableRowBorder(int width) {
-        Utils.printMessage(tableLine(width));
+        Util.printMessage(tableLine(width));
     }
 
     public static void printTableHeader(String header, int width) {

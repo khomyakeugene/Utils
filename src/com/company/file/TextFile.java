@@ -1,7 +1,7 @@
 package com.company.file;
 
 import com.company.caesar.Caesar;
-import com.company.utils.Utils;
+import com.company.utils.Util;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ public class TextFile {
             try {
                 bufferedWriter = new BufferedWriter(new FileWriter(fileName));
             } catch (IOException e) {
-                Utils.printMessage(String.format(CANNOT_OPEN_FILE_TO_WRITE_PATTERN, fileName));
-                Utils.printMessage(e.getMessage());
+                Util.printMessage(String.format(CANNOT_OPEN_FILE_TO_WRITE_PATTERN, fileName));
+                Util.printMessage(e.getMessage());
                 bufferedWriter = null;
             }
 
@@ -62,8 +62,8 @@ public class TextFile {
                         // As a sign of error
                         fullFileName = null;
                         // Indicate error message 
-                        Utils.printMessage(String.format(CANNOT_WRITE_ROW_TO_FILE_PATTERN, string, fileName));
-                        Utils.printMessage(e.getMessage());
+                        Util.printMessage(String.format(CANNOT_WRITE_ROW_TO_FILE_PATTERN, string, fileName));
+                        Util.printMessage(e.getMessage());
                         break;
                     }
                 }
@@ -77,8 +77,8 @@ public class TextFile {
                     // As a sign of error
                     fullFileName = null;
                     // Indicate error message 
-                    Utils.printMessage(String.format(CANNOT_CLOSE_FILE_PATTERN, fileName));
-                    Utils.printMessage(e.getMessage());
+                    Util.printMessage(String.format(CANNOT_CLOSE_FILE_PATTERN, fileName));
+                    Util.printMessage(e.getMessage());
                 }
             }
         }
@@ -87,11 +87,11 @@ public class TextFile {
         return fullFileName;
     }
 
-    public static String writeEncodedListToFile(String fileName, List<? extends Object>  list, int shift) {
+    public static String writeEncodedListToFile(String fileName, List<?>  list, int shift) {
         return writeListToFile(fileName, Caesar.encodeList(list, shift));
     }
 
-    public static String writeEncodedUsingDefaultShiftListToFile(String fileName, List<? extends Object> list) {
+    public static String writeEncodedUsingDefaultShiftListToFile(String fileName, List<?> list) {
         return writeEncodedListToFile(fileName, list, DEFAULT_SHIFT);
     }
 
@@ -103,8 +103,8 @@ public class TextFile {
             try {
                 bufferedReader = new BufferedReader(new FileReader(fileName));
             } catch (FileNotFoundException e) {
-                Utils.printMessage(String.format(CANNOT_OPEN_FILE_TO_READ_PATTERN, fileName));
-                Utils.printMessage(e.getMessage());
+                Util.printMessage(String.format(CANNOT_OPEN_FILE_TO_READ_PATTERN, fileName));
+                Util.printMessage(e.getMessage());
                 bufferedReader = null;
             }
 
@@ -118,8 +118,8 @@ public class TextFile {
                     bufferedReader.close();
                 } catch (IOException e) {
                     // Indicate error message
-                    Utils.printMessage(String.format(CANNOT_CLOSE_FILE_PATTERN, fileName));
-                    Utils.printMessage(e.getMessage());
+                    Util.printMessage(String.format(CANNOT_CLOSE_FILE_PATTERN, fileName));
+                    Util.printMessage(e.getMessage());
                 }
             }
         }

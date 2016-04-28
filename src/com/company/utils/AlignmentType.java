@@ -3,7 +3,7 @@ package com.company.utils;
 import java.util.Arrays;
 
 /**
- * Created by Yevgen on 25.03.2016 as a part of the project "Utils".
+ * Created by Yevgen on 25.03.2016 as a part of the project "Util".
  */
 public enum AlignmentType {
     LEFT {
