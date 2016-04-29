@@ -18,20 +18,20 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Util {
     // public final static int LETS_THINK_THIS_IS_THE_NUMBER_OF_CURRENT_ELEMENT_OF_STACK = 1; // Reserve it for future time
-    public final static int LETS_THINK_THIS_IS_THE_NUMBER_OF_CALLING_ELEMENT_OF_STACK = 2;
+    private final static int LETS_THINK_THIS_IS_THE_NUMBER_OF_CALLING_ELEMENT_OF_STACK = 2;
 
-    public static final String DONE_MESSAGE = "done";
-    public final static String MESSAGE_WITH_PREFIX_PATTERN = "<%s>: %s";
-    public final static String CLASS_NAME_PATTERN = "Class Name: %s";
-    public final static String FULL_METHOD_NAME_PATTERN = "%s.%s";
-    public final static String EXCEPTION_MESSAGE_PATTERN = "<%s>: %s";
-    public final static String PLEASE_ENTER_A_PROPERTY_NAME_PATTERN =
+    private static final String DONE_MESSAGE = "done";
+    private final static String MESSAGE_WITH_PREFIX_PATTERN = "<%s>: %s";
+    private final static String CLASS_NAME_PATTERN = "Class Name: %s";
+    private final static String FULL_METHOD_NAME_PATTERN = "%s.%s";
+    private final static String EXCEPTION_MESSAGE_PATTERN = "<%s>: %s";
+    private final static String PLEASE_ENTER_A_PROPERTY_NAME_PATTERN =
             "Please, enter name of a property of class %s (or just push <Enter> to stop):";
-    public final static String PROPERTY_DESCRIPTION_PATTERN = "A %s \"%s\" is presented in class \"%s\"";
-    public final static String PLEASE_REPEAT_ENTER =
+    private final static String PROPERTY_DESCRIPTION_PATTERN = "A %s \"%s\" is presented in class \"%s\"";
+    private final static String PLEASE_REPEAT_ENTER =
             "%s was generated with data \"%s\". Please, repeat enter action";
 
-    public static void printLine(String message) {
+    static void printLine(String message) {
         System.out.print(message);
     }
 
@@ -141,7 +141,6 @@ public class Util {
         } while (true);
     }
 
-
     public static int readInputInt(String enterMessageInvitation) {
         final Scanner scanner = new Scanner(System.in);
 
@@ -221,6 +220,27 @@ public class Util {
         return Util.DateToLocalDate(date2).until(Util.DateToLocalDate(date1), DAYS);
     }
 
+    public static String getApplicationName() {
+        String result;
+
+        try {
+            result = getApplicationMainClass().getProtectionDomain().getCodeSource().getLocation().getFile();
+        } catch (NullPointerException e) {
+            // Unfortunately, it is difficult to recognize why when it is executed "under IntelliJ IDEA",
+            // class.getProtectionDomain() could return null, but, in this case, there is kind of compromise -
+            // just let return the name of the main class
+            result = getApplicationMainClassName();
+        }
+
+        return result;
+    }
+
+    public static String getResourceFilePath(String fileName) {
+        URL url = Util.class.getClassLoader().getResource(fileName);
+
+        return (url != null) ? url.getFile() : null;
+    }
+
     public static String getApplicationMainClassName() {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
         StackTraceElement main = stack[stack.length - 1];
@@ -244,25 +264,7 @@ public class Util {
         return result;
     }
 
-    public static String getApplicationName() {
-        String result;
-
-        try {
-            result = getApplicationMainClass().getProtectionDomain().getCodeSource().getLocation().getFile();
-        } catch (NullPointerException e) {
-            // Unfortunately, it is difficult to recognize why when it is executed "under IntelliJ IDEA",
-            // class.getProtectionDomain() could return null, but, in this case, there is kind of compromise -
-            // just let return the name of the main class
-            result = getApplicationMainClassName();
-        }
-
-        return result;
-    }
-
-
-    public static String getResourceFilePath(String fileName) {
-        URL url = Util.class.getClassLoader().getResource(fileName);
-
-        return (url != null) ? url.getFile() : null;
+    public static long getNanoTime() {
+        return System.nanoTime();
     }
 }
