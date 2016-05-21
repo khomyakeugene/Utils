@@ -1,5 +1,7 @@
 package com.company.utils;
 
+import java.util.Random;
+
 /**
  * Created by Yevgen on 18.03.2016 as a part of the project "JEE_Homework_1".
  */
@@ -8,8 +10,10 @@ public class RandomDataGenerator {
 
     public static final int DEFAULT_UPPER_INT_LIMIT = 1000;
     public static final int DEFAULT_UPPER_INT_LIMIT_MULTIPLIER = 10;
+    private static final int DEFAULT_STRING_LENGTH = 32;
 
     private int upperIntLimit;
+    static private Random random = new Random();
 
     public RandomDataGenerator(int upperLimit) {
         this.upperIntLimit = upperLimit;
@@ -43,5 +47,21 @@ public class RandomDataGenerator {
         Util.printDoneMessage();
 
         return result;
+    }
+
+    public static String getRandomString(int length) {
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+
+        return sb.toString();
+    }
+
+    public static String getRandomString() {
+        return getRandomString(DEFAULT_STRING_LENGTH);
     }
 }
