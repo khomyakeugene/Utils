@@ -14,7 +14,7 @@ public enum MethodArgumentType {
 
         @Override
         public Object invokeMethod(Object object, Method method, Integer argument) {
-            return SelfDescribingObjectService.invokeMethod(object, method);
+            return ObjectService.invokeMethod(object, method);
         }
     },
 
@@ -25,7 +25,7 @@ public enum MethodArgumentType {
         }
 
         public Object invokeMethod(Object object, Method method, Integer argument) {
-            return SelfDescribingObjectService.invokeMethod(object, method, argument);
+            return ObjectService.invokeMethod(object, method, argument);
         }
     },
 
@@ -37,7 +37,7 @@ public enum MethodArgumentType {
 
         @Override
         public Object invokeMethod(Object object, Method method, Integer argument) {
-            return SelfDescribingObjectService.invokeMethod(object, method, argument);
+            return ObjectService.invokeMethod(object, method, argument);
         }
     },
 
@@ -49,14 +49,14 @@ public enum MethodArgumentType {
 
         @Override
         public Object invokeMethod(Object object, Method method, Integer argument) {
-            return SelfDescribingObjectService.invokeMethod(object, method, argument, argument);
+            return ObjectService.invokeMethod(object, method, argument, argument);
         }
     };
 
     abstract Class[] buildParameterTypes();
 
     public Method getMethod(Object object, String methodName) {
-        return SelfDescribingObjectService.searchPublicMethod(object, methodName, buildParameterTypes());
+        return ObjectService.searchPublicMethod(object, methodName, buildParameterTypes());
     }
 
     public Object invokeMethod(Object object, String methodName, Integer argument) {

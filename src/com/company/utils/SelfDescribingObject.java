@@ -5,31 +5,31 @@ package com.company.utils;
  */
 public class SelfDescribingObject {
     public String[] getPublicMethodNameList(String methodPrefix) {
-        return SelfDescribingObjectService.getPublicMethodNameList(this, methodPrefix);
+        return ObjectService.getPublicMethodNameList(this, methodPrefix);
     }
 
     public String[] getPublicFieldNameList() {
-        return SelfDescribingObjectService.getPublicFieldNameList(this);
+        return ObjectService.getPublicFieldNameList(this);
     }
 
     public String[] getGettersNameList() {
-        return SelfDescribingObjectService.getGettersNameList(this);
+        return ObjectService.getGettersNameList(this);
     }
 
     public String[] getSettersNameList() {
-        return SelfDescribingObjectService.getSettersNameList(this);
+        return ObjectService.getSettersNameList(this);
     }
 
     public String checkWhetherFieldIsPresented(String fieldName, boolean onlyPublic) {
-        return SelfDescribingObjectService.checkWhetherFieldIsPresented(this, fieldName, onlyPublic);
+        return ObjectService.checkWhetherFieldIsPresented(this, fieldName, onlyPublic);
     }
 
     public String checkWhetherPublicFieldIsPresented(String fieldName) {
-        return SelfDescribingObjectService.checkWhetherFieldIsPresented(this, fieldName, true);
+        return ObjectService.checkWhetherFieldIsPresented(this, fieldName, true);
     }
 
-    public String checkWhetherMethodWithoutArgumentsIsPresented(String methodName, boolean onlyPublic) {
-        return SelfDescribingObjectService.checkWhetherMethodWithoutArgumentsIsPresented(this, methodName, onlyPublic);
+    private String checkWhetherMethodWithoutArgumentsIsPresented(String methodName, boolean onlyPublic) {
+        return ObjectService.checkWhetherMethodWithoutArgumentsIsPresented(this, methodName, onlyPublic);
     }
 
     public String checkWhetherPublicMethodWithoutArgumentsIsPresented(String methodName) {
@@ -37,6 +37,6 @@ public class SelfDescribingObject {
     }
 
     public ObjectProperty checkProperty(String propertyName) {
-        return SelfDescribingObjectService.checkProperty(this, propertyName);
+        return ObjectService.checkProperty(this, propertyName);
     }
 }

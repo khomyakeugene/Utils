@@ -9,14 +9,13 @@ import java.util.ArrayList;
 /**
  * Created by Yevgen on 10.01.2016.
  */
-public class SelfDescribingObjectService {
-    public static final String METHOD_IS_NOT_PRESENTED_IN_CLASS_PATTERN = "Method <{0}> is not presented in class <{1}>";
-    public static final String FIELD_IS_NOT_PRESENTED_IN_CLASS_PATTERN = "Field <{0}> is not presented in class <{1}>";
-    public static final String ACCESS_DENIED_TO_THE_FIELD_IN_CLASS_PATTERN = "Access denied to the field <{0}> in class <{1}>";
-    public static final String ACCESS_DENIED_TO_THE_METHOD_IN_CLASS_PATTERN = "Access denied to the method <{0}> in class <{1}>";
-
-    public static final String GET_PREFIX = "get";
-    public static final String SET_PREFIX = "set";
+public class ObjectService {
+    private static final String METHOD_IS_NOT_PRESENTED_IN_CLASS_PATTERN = "Method <{0}> is not presented in class <{1}>";
+    private static final String FIELD_IS_NOT_PRESENTED_IN_CLASS_PATTERN = "Field <{0}> is not presented in class <{1}>";
+    private static final String ACCESS_DENIED_TO_THE_FIELD_IN_CLASS_PATTERN = "Access denied to the field <{0}> in class <{1}>";
+    private static final String ACCESS_DENIED_TO_THE_METHOD_IN_CLASS_PATTERN = "Access denied to the method <{0}> in class <{1}>";
+    private static final String GET_PREFIX = "get";
+    private static final String SET_PREFIX = "set";
 
     public static String[] getPublicMethodNameList(Object object, String methodPrefix) {
         Method[] methods = object.getClass().getMethods();
@@ -79,7 +78,7 @@ public class SelfDescribingObjectService {
         return errorMessage;
     }
 
-    public static String checkWhetherPublicFieldIsPresented(Object object, String fieldName) {
+    private static String checkWhetherPublicFieldIsPresented(Object object, String fieldName) {
         return checkWhetherFieldIsPresented(object, fieldName, true);
     }
 
@@ -103,7 +102,7 @@ public class SelfDescribingObjectService {
         return errorMessage;
     }
 
-    public static String checkWhetherPublicMethodWithoutArgumentsIsPresented(Object object, String methodName) {
+    private static String checkWhetherPublicMethodWithoutArgumentsIsPresented(Object object, String methodName) {
         return checkWhetherMethodWithoutArgumentsIsPresented(object,methodName, true);
     }
 
@@ -157,7 +156,7 @@ public class SelfDescribingObjectService {
         return objectProperty;
     }
 
-    public static Method searchMethod(String className, String methodName, Class<?>[] parameterTypes, boolean onlyPublic) {
+    private static Method searchMethod(String className, String methodName, Class<?>[] parameterTypes, boolean onlyPublic) {
         Method method = null;
         if (methodName != null) {
             try {
@@ -180,7 +179,7 @@ public class SelfDescribingObjectService {
         return method;
     }
 
-    public static Method searchMethod(Object object, String methodName, Class[] parameterTypes, boolean onlyPublic) {
+    private static Method searchMethod(Object object, String methodName, Class[] parameterTypes, boolean onlyPublic) {
         return searchMethod(object.getClass().getName(), methodName, parameterTypes, onlyPublic);
     }
 
@@ -198,11 +197,11 @@ public class SelfDescribingObjectService {
         return null;
     }
 
-    public static Method searchOneDoubleArgumentMethod(String className, String methodName, boolean onlyPublic) {
+    private static Method searchOneDoubleArgumentMethod(String className, String methodName, boolean onlyPublic) {
         return searchMethod(className, methodName, new Class[]{double.class}, onlyPublic);
     }
 
-    public static Method searchOneDoubleArgumentPublicMethod(String className, String methodName) {
+    private static Method searchOneDoubleArgumentPublicMethod(String className, String methodName) {
         return searchOneDoubleArgumentMethod(className, methodName, true);
     }
 
@@ -210,7 +209,7 @@ public class SelfDescribingObjectService {
         return searchOneDoubleArgumentMethod(className, methodName, false);
     }
 
-    public static Method searchEmptyArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+    private static Method searchEmptyArgumentMethod(Object object, String methodName, boolean onlyPublic) {
         return searchMethod(object, methodName, new Class[]{}, onlyPublic);
     }
 
@@ -222,7 +221,7 @@ public class SelfDescribingObjectService {
         return searchEmptyArgumentMethod(object, methodName, false);
     }
 
-    public static Method searchOneObjectArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+    private static Method searchOneObjectArgumentMethod(Object object, String methodName, boolean onlyPublic) {
         return searchMethod(object, methodName, new Class[]{Object.class}, onlyPublic);
     }
 
@@ -234,7 +233,7 @@ public class SelfDescribingObjectService {
         return searchOneObjectArgumentMethod(object, methodName, false);
     }
 
-    public static Method searchOneIntArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+    private static Method searchOneIntArgumentMethod(Object object, String methodName, boolean onlyPublic) {
         return searchMethod(object, methodName, new Class[]{int.class}, onlyPublic);
     }
 
@@ -246,7 +245,7 @@ public class SelfDescribingObjectService {
         return searchOneIntArgumentMethod(object, methodName, false);
     }
 
-    public static Method searchOneIntAndOneObjectArgumentMethod(Object object, String methodName, boolean onlyPublic) {
+    private static Method searchOneIntAndOneObjectArgumentMethod(Object object, String methodName, boolean onlyPublic) {
         return searchMethod(object, methodName, new Class[]{int.class, Object.class}, onlyPublic);
     }
 
@@ -258,7 +257,7 @@ public class SelfDescribingObjectService {
         return searchOneIntAndOneObjectArgumentMethod(object, methodName, false);
     }
 
-    public static double invokeOneDoubleArgumentStaticMethod(Method method, double argument) {
+    private static double invokeOneDoubleArgumentStaticMethod(Method method, double argument) {
         double result = Double.NaN;
 
         try {
@@ -272,5 +271,32 @@ public class SelfDescribingObjectService {
 
     public static double invokeOneDoubleArgumentStaticMethod(String className, String methodName, double argument) {
         return invokeOneDoubleArgumentStaticMethod(searchOneDoubleArgumentPublicMethod(className, methodName), argument);
+    }
+
+    private static Method searchPublicMethodWithoutParameters(Object object, String methodName) {
+        return searchPublicMethod(object, methodName, new Class[]{});
+    }
+
+    private static Object invokePublicEmptyArgumentMethod(Object object, String methodName) {
+        return invokeMethod(object, searchPublicMethodWithoutParameters(object, methodName));
+    }
+
+    public static boolean isEqualByGetterValuesStringRepresentation(Object object1, Object object2) {
+        boolean result = object1.getClass().equals(object2.getClass());
+
+        if (result) {
+            for (String s : getGettersNameList(object1)) {
+                Object methodResult1 = invokePublicEmptyArgumentMethod(object1, s);
+                Object methodResult2 = invokePublicEmptyArgumentMethod(object2, s);
+
+                result = ((methodResult1 == null) ? "" : methodResult1.toString()).
+                        equals((methodResult1 == null) ? "" : methodResult2.toString());
+                if (!result) {
+                    break;
+                }
+            }
+        }
+
+        return result;
     }
 }
