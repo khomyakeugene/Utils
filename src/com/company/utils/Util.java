@@ -31,6 +31,24 @@ public class Util {
     private final static String PLEASE_REPEAT_ENTER =
             "%s was generated with data \"%s\". Please, repeat enter action";
 
+    public static String toString(Object object) {
+        String result;
+        if (object == null) {
+            result = "null";
+        } else {
+            result = object.toString();
+            if (object instanceof String) {
+                result =  "\"" + result + "\"";
+            }
+        }
+
+        return result;
+    }
+
+    public static String toStringMaskNullAsEmpty(Object object) {
+        return (object == null) ? "" : object.toString();
+    }
+
     static void printLine(String message) {
         System.out.print(message);
     }

@@ -3,7 +3,7 @@ package com.company.utils;
 import java.util.Arrays;
 
 /**
- * Created by Yevgen on 25.03.2016 as a part of the project "Util".
+ * Created by Yevhen on 25.05.2016.
  */
 public enum AlignmentType {
     LEFT {
@@ -47,4 +47,5 @@ public enum AlignmentType {
 
         return new String(spacePiece);
     }
+
 }
