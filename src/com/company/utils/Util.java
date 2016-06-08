@@ -69,7 +69,7 @@ public class Util {
         printMessage(DONE_MESSAGE);
     }
 
-    public static String getLongestString(String[] data) {
+    private static String getLongestString(String[] data) {
         Optional<String> stringOptional = Arrays.stream(data).max((f1, f2) -> new Integer(f1.length()).compareTo(f2.length()));
 
         return stringOptional.isPresent() ? stringOptional.get() : "";
@@ -145,19 +145,26 @@ public class Util {
         return result;
     }
 
-    public static String readInputString(String enterMessageInvitation) {
+    private static String readInputString(String invitationMessage, boolean checkNotEmpty) {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        printMessage(enterMessageInvitation);
-
         do {
+            printMessage(invitationMessage);
             try {
-                return bufferedReader.readLine();
+                String result = bufferedReader.readLine();
+                if (!checkNotEmpty || (result != null && !result.isEmpty())) {
+                    return result;
+                }
             } catch (IOException e) {
                 printMessage(String.format(PLEASE_REPEAT_ENTER, e.getClass().getName(), e.getMessage()));
             }
         } while (true);
     }
+
+    private static String readInputString(String invitationMessage) {
+        return readInputString(invitationMessage, false);
+    }
+
 
     public static int readInputInt(String enterMessageInvitation) {
         final Scanner scanner = new Scanner(System.in);
@@ -166,11 +173,32 @@ public class Util {
         return scanner.nextInt();
     }
 
-    public static double readInputDouble(String enterMessageInvitation) {
-        final Scanner scanner = new Scanner(System.in);
+    private static Double parseDouble(String data) {
+        Double result;
 
-        printMessage(enterMessageInvitation);
-        return scanner.nextDouble();
+        try {
+            result = Double.parseDouble(data);
+        } catch (NullPointerException | NumberFormatException e) {
+            result = null;
+        }
+
+        return result;
+    }
+
+    public static Double readInputDouble(String enterMessageInvitation, boolean checkNotEmpty) {
+        Double result = null;
+
+        boolean needRepeat;
+        do {
+            needRepeat = checkNotEmpty;
+            String stringData = readInputString(enterMessageInvitation, checkNotEmpty);
+            if (stringData != null && !stringData.isEmpty()) {
+                result = parseDouble(stringData);
+                needRepeat = (result == null);
+            }
+        } while (needRepeat);
+
+        return result;
     }
 
     public static void inspectObjectProperties(SelfDescribingObject object) {
@@ -192,7 +220,7 @@ public class Util {
         } while (true);
     }
 
-    public static String repeatString(String string, int times) {
+    private static String repeatString(String string, int times) {
         // Some variant BEFORE Java 8 - store here just as an example of an alternative way
         // return String.format(String.format("%%%ds", times), "").replace(" ", string);
         return String.join("", java.util.Collections.nCopies(times, string));
@@ -219,7 +247,7 @@ public class Util {
         return result;
     }
 
-    public static LocalDate DateToLocalDate(Date date) {
+    private static LocalDate DateToLocalDate(Date date) {
         Instant instant = date.toInstant();
         ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
 
@@ -259,14 +287,14 @@ public class Util {
         return (url != null) ? url.getFile() : null;
     }
 
-    public static String getApplicationMainClassName() {
+    private static String getApplicationMainClassName() {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
         StackTraceElement main = stack[stack.length - 1];
 
         return main.getClassName();
     }
 
-    public static Class getApplicationMainClass() {
+    private static Class getApplicationMainClass() {
         Class result;
 
         try {
