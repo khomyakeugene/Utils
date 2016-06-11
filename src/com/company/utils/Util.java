@@ -313,4 +313,8 @@ public class Util {
     public static long getNanoTime() {
         return System.nanoTime();
     }
+
+    public static <T> T getFirstFromList(List<T> objects) {
+        return  (objects != null && objects.size() > 0) ? objects.get(0) : null;
+    }
 }
