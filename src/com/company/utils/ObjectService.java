@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Yevgen on 10.01.2016.
@@ -298,5 +299,40 @@ public class ObjectService {
         }
 
         return result;
+    }
+
+    public static Object copyObjectByAccessors(Object source, Object target) {
+        String[] sourceGetters = getGettersNameList(source);
+        String[] targetSetters = getSettersNameList(target);
+
+        Arrays.stream(sourceGetters).forEach(getter -> {
+            String setterName = SET_PREFIX + getter.substring(GET_PREFIX.length());
+            if (Arrays.stream(targetSetters).filter(s -> s.equals(setterName)).findFirst().isPresent()) {
+                // Data type control
+                try {
+                    Method getterMethod = source.getClass().getMethod(getter);
+                    Class returnType = getterMethod.getReturnType();
+                    try {
+                        Method setterMethod = target.getClass().getMethod(setterName, returnType);
+                        if (setterMethod != null) {
+                            try {
+                                setterMethod.invoke(target, getterMethod.invoke(source));
+                            } catch (IllegalAccessException | InvocationTargetException e) {
+                                // Theoretically, such exception should not be raised here
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    } catch (NoSuchMethodException e) {
+                        // Not all "analogs" of source.getters should be presented as target.setters
+
+                    }
+                } catch (NoSuchMethodException e) {
+                    // Theoretically, such exception should not be raised here
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        return target;
     }
 }
