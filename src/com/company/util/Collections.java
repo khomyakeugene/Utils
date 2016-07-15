@@ -1,4 +1,4 @@
-package com.company.utils;
+package com.company.util;
 
 import java.util.AbstractCollection;
 
@@ -7,9 +7,7 @@ import java.util.AbstractCollection;
  */
 public class Collections {
     public static void printList(AbstractCollection<?> list) {
-        list
-                .stream()
-                .forEach(p -> Util.printMessage(p.toString()));
+        list.forEach(p -> Util.printMessage(p.toString()));
     }
 
     public static void printListAsTable(AbstractCollection<?> list, String header, int width) {
@@ -17,7 +15,7 @@ public class Collections {
         Table.printTableHeader(header, width);
 
         // The data
-        list.stream().forEach(p -> Table.printTableRow(p.toString(), width));
+        list.forEach(p -> Table.printTableRow(p.toString(), width));
 
         // Footer
         Table.printTableRowBorder(width);

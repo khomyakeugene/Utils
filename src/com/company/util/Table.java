@@ -1,22 +1,22 @@
-package com.company.utils;
+package com.company.util;
 
 /**
  * Created by Yevgen on 23.01.2016 as a part of the project "Unit8_Homework".
  */
 public class Table {
-    public final static Character ROW_CHARACTER = '-';
-    public final static Character COLUMN_CHARACTER = '|';
-    public final static Character CORNER_CHARACTER = '+';
+    private final static Character ROW_CHARACTER = '-';
+    private final static Character COLUMN_CHARACTER = '|';
+    private final static Character CORNER_CHARACTER = '+';
 
-    public static String line(int length) {
+    private static String line(int length) {
         return Util.repeatChar(ROW_CHARACTER, length);
     }
 
-    public static String tableLine(int width) {
+    private static String tableLine(int width) {
         return CORNER_CHARACTER + line(width - 2) + CORNER_CHARACTER;
     }
 
-    public static String tableRow(String rowData, int width) {
+    private static String tableRow(String rowData, int width) {
         int dataLength = width - 2;
 
         return String.format(String.format("%c%%-%ds%c", COLUMN_CHARACTER, dataLength, COLUMN_CHARACTER),

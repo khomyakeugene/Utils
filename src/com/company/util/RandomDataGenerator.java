@@ -1,4 +1,4 @@
-package com.company.utils;
+package com.company.util;
 
 import java.util.Random;
 
@@ -6,10 +6,10 @@ import java.util.Random;
  * Created by Yevgen on 18.03.2016 as a part of the project "JEE_Homework_1".
  */
 public class RandomDataGenerator {
-    public static final String GENERATE_RANDOM_INTEGER_ELEMENTS_PATTERN = "Generate random %d <Integer> elements ...";
+    private static final String GENERATE_RANDOM_INTEGER_ELEMENTS_PATTERN = "Generate random %d <Integer> elements ...";
 
-    public static final int DEFAULT_UPPER_INT_LIMIT = 1000;
-    public static final int DEFAULT_UPPER_INT_LIMIT_MULTIPLIER = 10;
+    private static final int DEFAULT_UPPER_INT_LIMIT = 1000;
+    private static final int DEFAULT_UPPER_INT_LIMIT_MULTIPLIER = 10;
     private static final int DEFAULT_STRING_LENGTH = 32;
 
     private int upperIntLimit;

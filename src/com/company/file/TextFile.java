@@ -1,7 +1,7 @@
 package com.company.file;
 
 import com.company.caesar.Caesar;
-import com.company.utils.Util;
+import com.company.util.Util;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.List;
  * Created by Yevgen on 25.01.2016 as a part of the project "Unit10_Homework".
  */
 public class TextFile {
-    public final static String CANNOT_OPEN_FILE_TO_WRITE_PATTERN = "Cannot open file \"%s\" to write!";
-    public final static String CANNOT_CLOSE_FILE_PATTERN = "Cannot close file \"%s\"!";
-    public final static String CANNOT_WRITE_ROW_TO_FILE_PATTERN = "Cannot write row \"%s\" to file \"%s\"!";
-    public final static String CANNOT_OPEN_FILE_TO_READ_PATTERN = "Cannot open file \"%s\" to read!";
-    public final static int DEFAULT_SHIFT = 20;
+    private final static String CANNOT_OPEN_FILE_TO_WRITE_PATTERN = "Cannot open file \"%s\" to write!";
+    private final static String CANNOT_CLOSE_FILE_PATTERN = "Cannot close file \"%s\"!";
+    private final static String CANNOT_WRITE_ROW_TO_FILE_PATTERN = "Cannot write row \"%s\" to file \"%s\"!";
+    private final static String CANNOT_OPEN_FILE_TO_READ_PATTERN = "Cannot open file \"%s\" to read!";
+    private final static int DEFAULT_SHIFT = 20;
 
     public static String getAbsoluteFileName(String fileName) {
         String fullFileName;

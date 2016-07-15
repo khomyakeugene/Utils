@@ -1,4 +1,4 @@
-package com.company.utils;
+package com.company.util;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Created by Yevgen on 19.03.2016 as a part of the project "JEE_Homework_1".
  */
 public class MethodDescriptor {
-    public static final String METHOD_NAME_REGEX_DELIMITER = "\\.";
+    private static final String METHOD_NAME_REGEX_DELIMITER = "\\.";
 
     private String methodName;
     private String fullMethodName;

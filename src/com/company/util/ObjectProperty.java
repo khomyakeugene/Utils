@@ -1,4 +1,4 @@
-package com.company.utils;
+package com.company.util;
 
 /**
  * Created by Yevgen on 07.01.2016.
@@ -7,7 +7,7 @@ public class ObjectProperty {
     enum PropertyType {field, method}
 
     private String sourcePropertyName;
-    PropertyType propertyType = PropertyType.field;
+    private PropertyType propertyType = PropertyType.field;
     private String realPropertyName;
     private String errorMessage = "";
 
