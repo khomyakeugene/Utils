@@ -14,20 +14,12 @@ public class StubDao<T extends DataItem> extends GenericHolder<T> {
 
     private SortedSet<T> dataItemSet = new TreeSet<>();
 
-    public SortedSet<T> getDataItemSet() {
+    protected SortedSet<T> readDataItemSet() {
         return dataItemSet;
     }
 
-    public void setDataItemSet(SortedSet<T> dataItemSet) {
-        this.dataItemSet = dataItemSet;
-    }
-
-    protected SortedSet<T> readDataItemSet() {
-        return getDataItemSet();
-    }
-
     protected void saveDataItemSet(SortedSet<T> dataItemSet) {
-        setDataItemSet(dataItemSet);
+        this.dataItemSet = dataItemSet;
     }
 
     private int generateId() {
