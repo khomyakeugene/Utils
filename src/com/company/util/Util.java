@@ -1,9 +1,8 @@
 package com.company.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -30,6 +29,8 @@ public class Util {
     private final static String PROPERTY_DESCRIPTION_PATTERN = "A %s \"%s\" is presented in class \"%s\"";
     private final static String PLEASE_REPEAT_ENTER =
             "%s was generated with data \"%s\". Please, repeat enter action";
+    private static final String INVALID_FILE_LENGTH_PATTERN =
+            "Length of the file <%s> is <%d>, but there only <%d> bytes have been read!";
 
     public static String toString(Object object) {
         String result;
@@ -316,5 +317,36 @@ public class Util {
 
     public <T> T getFirstFromList(List<T> objects) {
         return  (objects != null && objects.size() > 0) ? objects.get(0) : null;
+    }
+
+    public static byte[] readResourceFileToByteArray(String fileName) {
+        byte[] result = null;
+
+        URL resource = ClassLoader.getSystemClassLoader().getResource(fileName);
+        if (resource != null) {
+            try {
+                String fullFileName = URLDecoder.decode(resource.getFile(), "UTF-8");
+                File file = new File(fullFileName);
+                if (file.exists()) {
+                    int fileLength = (int)file.length();
+                    result = new byte[fileLength];
+
+                    try {
+                        FileInputStream fileInputStream = new FileInputStream(file);
+                        int readLength = fileInputStream.read(result);
+                        fileInputStream.close();
+                        if (readLength != fileLength) {
+                            throw new IOException(String.format(INVALID_FILE_LENGTH_PATTERN, fileName, fileLength, readLength));
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 }
