@@ -335,4 +335,17 @@ public class ObjectService {
 
         return target;
     }
+
+    public static Field getDeclaredField(Class objectClass, String fieldName) {
+        Field result = null;
+        while((result == null) && (objectClass != null)) {
+            try {
+                result = objectClass.getDeclaredField(fieldName);
+            } catch (NoSuchFieldException e) {
+                objectClass = objectClass.getSuperclass();
+            }
+        }
+
+        return result;
+    }
 }
