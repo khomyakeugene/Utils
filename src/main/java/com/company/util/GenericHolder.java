@@ -13,7 +13,7 @@ public class GenericHolder<T> {
                 getActualTypeArguments()[0]);
     }
 
-    private Class<T> getEntityClass() {
+    protected Class<T> getEntityClass() {
         if (entityClass == null) {
             entityClass = getGenericClass();
         }
