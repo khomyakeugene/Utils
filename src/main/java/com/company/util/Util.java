@@ -272,6 +272,10 @@ public class Util {
         return new Timestamp((new Date()).getTime());
     }
 
+    public Long dayToMiliseconds(int days){
+        return (long) (days * 24 * 60 * 60 * 1000);
+    }
+
     public static String getApplicationName() {
         String result;
 
