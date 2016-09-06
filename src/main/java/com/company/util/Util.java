@@ -3,6 +3,7 @@ package com.company.util;
 import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -255,7 +256,7 @@ public class Util {
         return zonedDateTime.toLocalDate();
     }
 
-    public static Date dateAdd(Date date, int days) {
+    public static Date addDays(Date date, int days) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DATE, days);
@@ -263,8 +264,12 @@ public class Util {
         return calendar.getTime();
     }
 
-    public static long dateSub(Date date1, Date date2) {
+    public static long subDays(Date date1, Date date2) {
         return Util.DateToLocalDate(date2).until(Util.DateToLocalDate(date1), DAYS);
+    }
+
+    public static Timestamp getCurrentTimestamp() {
+        return new Timestamp((new Date()).getTime());
     }
 
     public static String getApplicationName() {
