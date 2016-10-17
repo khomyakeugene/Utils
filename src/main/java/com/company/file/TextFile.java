@@ -1,7 +1,7 @@
 package com.company.file;
 
 import com.company.caesar.Caesar;
-import com.company.util.Util;
+import com.company.util.common.Util;
 
 import java.io.*;
 import java.util.ArrayList;

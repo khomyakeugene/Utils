@@ -1,4 +1,4 @@
-package com.company.util;
+package com.company.util.common;
 
 /**
  * Created by Yevgen on 07.01.2016.

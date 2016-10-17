@@ -1,4 +1,4 @@
-package com.company.util;
+package com.company.util.common;
 
 import java.util.Arrays;
 
@@ -8,21 +8,21 @@ import java.util.Arrays;
 public enum AlignmentType {
     LEFT {
         @Override
-        String alignString(String data, int width) {
+        public String alignString(String data, int width) {
             return data + getCharPiece(data, width);
         }
     },
 
     RIGHT {
         @Override
-        String alignString(String data, int width) {
+        public String alignString(String data, int width) {
             return getCharPiece(data, width) + data;
         }
     },
 
     CENTRE {
         @Override
-        String alignString(String data, int width) {
+        public String alignString(String data, int width) {
             int resultWidth = getResultLineLength(data, width);
 
             int spaceCount = resultWidth - data.length();
@@ -34,7 +34,7 @@ public enum AlignmentType {
         }
     };
 
-    abstract String alignString(String data, int width);
+    abstract public String alignString(String data, int width);
 
     int getResultLineLength(String data, int width) {
         int dataLength = data.length();

@@ -1,8 +1,8 @@
 package com.company.data.dao.hibernate.proto;
 
 import com.company.data.dao.proto.SqlExpressions;
-import com.company.util.GenericHolder;
-import com.company.util.ObjectService;
+import com.company.util.common.GenericHolder;
+import com.company.util.common.ObjectService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientObjectException;

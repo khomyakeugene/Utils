@@ -1,8 +1,8 @@
 package com.company.data.dao.stub.proto;
 
 import com.company.data.model.proto.DataItem;
-import com.company.util.DataIntegrityException;
-import com.company.util.GenericHolder;
+import com.company.util.common.DataIntegrityException;
+import com.company.util.common.GenericHolder;
 
 import java.util.*;
 

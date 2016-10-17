@@ -1,4 +1,4 @@
-package com.company.util;
+package com.company.util.common;
 
 import java.lang.reflect.Method;
 

@@ -1,4 +1,4 @@
-package com.company.util;
+package com.company.util.common;
 
 import java.io.*;
 import java.net.URL;
@@ -51,7 +51,7 @@ public class Util {
         return (object == null) ? "" : object.toString();
     }
 
-    static void printLine(String message) {
+    public static void printLine(String message) {
         System.out.print(message);
     }
 
